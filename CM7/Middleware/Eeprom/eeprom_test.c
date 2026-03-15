@@ -1,5 +1,5 @@
 #include "eeprom_test.h"
-#include "eeprom_driver.h"
+#include "../../Drivers/EEPROM/eeprom_driver.h"
 #include <string.h>
 
 /*

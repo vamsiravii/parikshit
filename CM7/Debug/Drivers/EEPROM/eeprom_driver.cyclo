@@ -1,0 +1,7 @@
+../Drivers/EEPROM/eeprom_driver.c:33:17:EEPROM_CalcCRC	4
+../Drivers/EEPROM/eeprom_driver.c:54:22:EEPROM_ReadRaw	5
+../Drivers/EEPROM/eeprom_driver.c:78:22:EEPROM_WriteRaw	5
+../Drivers/EEPROM/eeprom_driver.c:110:12:EEPROM_BlockValid	5
+../Drivers/EEPROM/eeprom_driver.c:125:15:EEPROM_Init	2
+../Drivers/EEPROM/eeprom_driver.c:135:15:EEPROM_Load	8
+../Drivers/EEPROM/eeprom_driver.c:185:15:EEPROM_Save	11

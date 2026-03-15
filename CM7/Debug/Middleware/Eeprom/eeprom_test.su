@@ -1,0 +1,7 @@
+../Middleware/Eeprom/eeprom_test.c:15:13:fill_pattern	24	static
+../Middleware/Eeprom/eeprom_test.c:21:12:check_pattern	24	static
+../Middleware/Eeprom/eeprom_test.c:34:13:test_init	8	static
+../Middleware/Eeprom/eeprom_test.c:45:13:test_save_load	408	static
+../Middleware/Eeprom/eeprom_test.c:74:13:test_newest_wins	608	static
+../Middleware/Eeprom/eeprom_test.c:108:13:test_ping_pong	416	static
+../Middleware/Eeprom/eeprom_test.c:152:6:EEPROM_RunTests	8	static

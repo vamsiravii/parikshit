@@ -18,26 +18,14 @@ typedef struct __attribute__((packed))
 } EEPROM_Block;
 
 
-/* ----- Derived constants ----- */
 
 #define EEPROM_BLOCK_SIZE   ((sizeof(EEPROM_Block)+3)&~3)
 #define EEPROM_BLOCK_WORDS  (EEPROM_BLOCK_SIZE/4)
 
-/*
- * Each copy occupies EEPROM_BLOCK_WORDS 32-bit words = EEPROM_BLOCK_WORDS*2
- * 16-bit virtual addresses.
- *
- * sizeof(EEPROM_Block) = 4+2+2+4+200+4 = 216 bytes  =>  EEPROM_BLOCK_SIZE = 216
- * EEPROM_BLOCK_WORDS   = 54
- *
- * Copy A virtual addresses: 1  .. 108   (byte offset 0   .. 215)
- * Copy B virtual addresses: 109 .. 216  (byte offset 216 .. 431)
- *
- * NB_OF_VAR in eeprom.h must therefore be 216.
- */
 
-#define COPY_A_BASE         0                        /* byte offset of copy A */
-#define COPY_B_BASE         (EEPROM_BLOCK_SIZE)      /* byte offset of copy B */
+
+#define COPY_A_BASE         0
+#define COPY_B_BASE         (EEPROM_BLOCK_SIZE)
 
 
 
@@ -62,17 +50,6 @@ static uint32_t EEPROM_CalcCRC(uint8_t *data, uint32_t length)
 }
 
 
-/*
- * EEPROM_ReadRaw
- *
- * Reads 'length' bytes from virtual-address space starting at byte offset
- * 'addr'.  Uses the 16-bit EE_ReadVariable API: every 4-byte (32-bit) word
- * is read as two consecutive 16-bit virtual variables.
- *
- * Virtual address mapping (1-based, matching VirtAddVarTab):
- *   vaddr = addr / 2 + 1   for the low  16-bit half of each 32-bit word
- *   vaddr = addr / 2 + 2   for the high 16-bit half
- */
 static EEPROM_Status EEPROM_ReadRaw(uint16_t addr,
                                      uint8_t  *data,
                                      uint16_t  length)
@@ -96,15 +73,7 @@ static EEPROM_Status EEPROM_ReadRaw(uint16_t addr,
 }
 
 
-/*
- * EEPROM_WriteRaw
- *
- * Writes 'length' bytes to virtual-address space starting at byte offset
- * 'addr'.  Mirrors the layout described in EEPROM_ReadRaw.
- *
- * IRQs are disabled for the whole sequence so that a power-loss mid-write
- * leaves the CRC invalid and the other copy untouched.
- */
+
 static EEPROM_Status EEPROM_WriteRaw(uint16_t       addr,
                                       const uint8_t *data,
                                       uint16_t       length)
@@ -186,8 +155,7 @@ EEPROM_Status EEPROM_Load(uint8_t *data)
 
     if(validA && validB)
     {
-        /* Both valid: take the one with the higher (newer) counter.
-         * On a tie (should never happen after first save) prefer A. */
+
         EEPROM_Block *newest =
             (blockB.counter > blockA.counter) ? &blockB : &blockA;
 
@@ -235,7 +203,7 @@ EEPROM_Status EEPROM_Save(const uint8_t *data)
         validB = EEPROM_BlockValid(&blockB);
     }
 
-    /* Determine current highest counter so new write is unambiguously newer */
+
     uint32_t counter = 0;
 
     if(validA && validB)
@@ -246,7 +214,7 @@ EEPROM_Status EEPROM_Save(const uint8_t *data)
     else if(validB)
         counter = blockB.counter;
 
-    /* Build new block */
+
     newBlock.magic   = EEPROM_MAGIC;
     newBlock.version = EEPROM_VERSION;
     newBlock.length  = EEPROM_DATA_SIZE;
@@ -256,23 +224,23 @@ EEPROM_Status EEPROM_Save(const uint8_t *data)
 
     newBlock.crc = EEPROM_CalcCRC((uint8_t *)&newBlock, EEPROM_BLOCK_SIZE - 4);
 
-    /* Overwrite the older copy (ping-pong) */
+
     uint16_t target;
 
     if(validA && validB)
     {
-        /* Overwrite whichever has the lower counter */
+
         target = (blockA.counter <= blockB.counter) ?
                   COPY_A_BASE : COPY_B_BASE;
     }
     else if(validA)
     {
-        /* A is the only valid copy; write new data to B */
+
         target = COPY_B_BASE;
     }
     else
     {
-        /* Neither valid (first boot or both corrupt); start with A */
+
         target = COPY_A_BASE;
     }
 

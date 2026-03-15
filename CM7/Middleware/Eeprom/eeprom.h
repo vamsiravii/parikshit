@@ -38,6 +38,12 @@
 #define VOLTAGE_RANGE  VOLTAGE_RANGE_3
 
 
+/* Flash sector base addresses for STM32H755 (Bank 2, 128KB sectors) */
+/* Bank 2 starts at 0x08100000, each sector is 0x20000 (128KB)        */
+#ifndef ADDR_FLASH_SECTOR_6_BANK2
+#define ADDR_FLASH_SECTOR_6_BANK2  ((uint32_t)0x081C0000)
+#endif
+
 /* EEPROM start location (Bank2 Sector6) */
 #define EEPROM_START_ADDRESS  ADDR_FLASH_SECTOR_6_BANK2
 

@@ -1,0 +1,8 @@
+../Middleware/Eeprom/eeprom.c:53:10:EE_Init	80	static,ignoring_inline_asm
+../Middleware/Eeprom/eeprom.c:334:10:EE_VerifyPageFullyErased	32	static
+../Middleware/Eeprom/eeprom.c:376:10:EE_ReadVariable	32	static
+../Middleware/Eeprom/eeprom.c:435:10:EE_WriteVariable	24	static
+../Middleware/Eeprom/eeprom.c:463:26:EE_Format	72	static,ignoring_inline_asm
+../Middleware/Eeprom/eeprom.c:526:17:EE_FindValidPage	24	static
+../Middleware/Eeprom/eeprom.c:598:17:EE_VerifyPageFullWriteVariable	96	static,ignoring_inline_asm
+../Middleware/Eeprom/eeprom.c:668:17:EE_PageTransfer	120	static,ignoring_inline_asm

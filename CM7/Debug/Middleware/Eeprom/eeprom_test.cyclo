@@ -1,0 +1,7 @@
+../Middleware/Eeprom/eeprom_test.c:15:13:fill_pattern	2
+../Middleware/Eeprom/eeprom_test.c:21:12:check_pattern	3
+../Middleware/Eeprom/eeprom_test.c:34:13:test_init	1
+../Middleware/Eeprom/eeprom_test.c:45:13:test_save_load	3
+../Middleware/Eeprom/eeprom_test.c:74:13:test_newest_wins	4
+../Middleware/Eeprom/eeprom_test.c:108:13:test_ping_pong	5
+../Middleware/Eeprom/eeprom_test.c:152:6:EEPROM_RunTests	5

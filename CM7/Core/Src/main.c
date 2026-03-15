@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "../../Middleware/Eeprom/eeprom_test.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -136,7 +136,7 @@ Error_Handler();
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
-
+  EEPROM_RunTests();
   /* USER CODE END 2 */
 
   /* Infinite loop */
